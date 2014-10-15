@@ -1,0 +1,26 @@
+CC=gcc
+OS=$(shell uname)
+CFLAGS=-Wall -DGL_EXT_PROTOTYPES -DX11 -g -I.. -I/usr/X11/include -I/usr/include/libpng12 -I/usr/include/python2.7
+ifeq ($(OS), Darwin)
+CFLAGS+=-I/usr/local/include/freetype2 
+else
+CFLAGS+=-I/usr/include/freetype2
+endif
+#CFLAGS+=-DGEOMETRY_SHADER
+LIBS=-lGLU -lGL -lm -lX11 -L/usr/X11/lib -lfreetype -ljpeg -lpng -lpython2.7
+EXEC=sandbox
+OBJS=sandbox.o x11gl.o ticktimer.o 
+OBJS+=hypnomix.o matrix.o shader.o font.o texture.o obj.o presets.o pool.o transform.o skybox.o module.o dir.o
+VPATH=.:..
+
+ALL=$(EXEC)
+$(EXEC): $(OBJS)
+	$(CC) $(OBJS) $(LIBS) -o $(EXEC)
+
+.c.o:
+	$(CC) $(CFLAGS) -c $< 
+
+clean:
+	rm $(EXEC)
+	rm *.o
+	rm ../*.o

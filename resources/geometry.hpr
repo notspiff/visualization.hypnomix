@@ -1,0 +1,9 @@
+name=geometry
+module=mod_tuto.so
+glslversion=1.2
+vtxshader=geometry.vsh
+geoshader=geometry.geo
+frgshader=geometry.fsh
+speed=0.001
+var=0.1 0.2 0.3
+clr0=1.0 1.0 1.0 1.0

@@ -1,0 +1,8 @@
+name=7Rain
+module=mod_7rain.so
+glslversion=1.2
+vtxshader=directional.vsh
+frgshader=directional.fsh
+speed=0.001
+var=0.1 0.2 0.3
+clr0=0.0 0.0 1.0 1.0

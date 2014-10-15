@@ -1,0 +1,39 @@
+//#version 120
+#version 130
+#extension GL_EXT_gpu_shader4 : require
+
+#define MAX_LIGHT 2
+
+attribute vec4 pos;
+attribute vec4 clr;
+attribute vec3 nrm;
+
+uniform mat3 mnormal;
+uniform mat4 mvp;
+uniform mat4 mmodel;
+// uniform vec3 lightpos[MAX_LIGHT];
+// uniform vec4 lightclr[MAX_LIGHT];
+uniform vec3 lightdir[MAX_LIGHT];
+uniform int nblights;
+
+flat varying vec4 v_color;
+
+void main(void) 
+{
+//	vec3 normal  = normalize(nrm * mnormal);
+	vec3 normal  = normalize(mnormal * nrm);
+
+	v_color = vec4(0.0, 0.0, 0.0, 1.0);
+	int i;
+	float diffuse;
+	for(i = 0; i < nblights; i++) {
+		// diffuse
+		diffuse = max(0.0, dot(normal, -lightdir[i]));
+	
+		// v_color += vec4(normal, clr.a);
+		v_color += clr * 1.0;
+	}
+	v_color.a = clr.a;
+v_color.r = 1.0;
+	gl_Position = mvp * pos;
+}

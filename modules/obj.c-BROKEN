@@ -1,0 +1,324 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <math.h>
+
+#include "opengl.h"
+#include "obj.h"
+
+
+/* FIXME: very crappy .OBJ parser */
+
+
+struct face {
+	unsigned int v[3];
+	unsigned int n[3];
+	unsigned int t[3];
+} face_t;
+
+
+
+void objRead(struct obj *obj, const char *filename)
+{
+	FILE *fp;
+	struct stat statinfo;
+
+	fp = fopen(filename, "r");
+	if(fp == NULL) {
+		fprintf(stderr, "objRead(): %s not found...\n", filename);
+		exit(EXIT_FAILURE);
+	}
+	stat(filename, &statinfo);
+	fprintf(stderr, "INFO: objRead(): open %s\n", filename);
+	obj->buf = (char *)malloc(statinfo.st_size);
+	fread(obj->buf, 1, statinfo.st_size, fp);
+	fclose(fp);
+
+}
+
+
+static void objCount(struct obj *obj) 
+{
+	int i, j;
+	char c;
+	int len = strlen(obj->buf);
+	char line[256]; /* FIXME: line do not exceed 256 chars!! */
+
+	obj->nbvtx = 0;
+	obj->nbnrm = 0;
+	obj->nbtex = 0;
+	obj->nbidx = 0;
+
+	i = 0;	
+	do {
+		j = 0;
+		while((i < len) && ((c = obj->buf[i]) != '\n')) {
+			line[j++] = c;
+			i++;
+		}
+		line[j] = 0;
+//fprintf(stderr, "LINE=%s\n", line);
+		switch(line[0]) {
+			case 'v':
+				if(line[1] == 't') {
+					obj->nbtex++;
+				} else if(line[1] == 'n') {
+					obj->nbnrm++;
+				} else if(line[1] == ' ') {
+					obj->nbvtx++;
+				}
+				break;
+			case 'f':
+				if(line[1] == ' ') {
+					obj->nbidx++;
+				}
+				break;
+		}
+
+		// fprintf(stderr, "line = %s\n", line);
+	} while(++i < len);
+}
+
+
+static void objParse(struct obj *obj, float *vtx, float *tex, float *nrm, 
+	struct face *face)
+{
+	int i, j;
+	int v, vn, f;
+	int len = strlen(obj->buf);
+	char line[256];
+	char c;
+	float miny, maxy;
+	float minz, maxz;
+	float height;
+	float x, y, z;
+	unsigned int v1, v2, v3;
+	unsigned int t1, t2, t3;
+	unsigned int n1, n2, n3;
+	int faceread;
+	
+	miny = maxy = 0.0;
+	minz = maxz = 0.0;
+
+	i = 0;
+	v = 0;
+	vn = 0;
+	f = 0;
+
+	do {
+		j = 0;
+		while((i < len) && ((c = obj->buf[i]) != '\n')) {
+			line[j++] = c;
+			i++;
+		}
+		line[j] = 0; 
+
+		if(sscanf(line, "v %f %f %f", &x, &y, &z) == 3) {
+			vtx[v*3] = x; 
+			vtx[v*3+1] = y;
+			vtx[v*3+2] = z;
+
+			if(y < miny) {
+				miny = y;
+			}
+			if(y > maxy) {
+				maxy = y;
+			}
+			if(z < minz) {
+				minz = z;
+			}
+			if(z > maxz) {
+				maxz = z;
+			}
+			
+			v++;
+		} 
+		if(sscanf(line, "vn %f %f %f", &x, &y, &z) == 3) {
+			nrm[vn*3] = x;
+			nrm[vn*3+1] = y;
+			nrm[vn*3+2] = z;
+			vn++;
+fprintf(stderr, "READ NORMAL: %f,%f,%f\n", x, y, z);
+		}
+		if(line[0] == 'f' && line[1] == ' ') {
+			faceread = 0;	
+			v1 = v2 = v3 = 1; /* start from 0, not 1 */
+			n1 = n2 = n3 = 1;
+			t1 = t2 = t3 = 1;
+			if(sscanf(line, "f %d %d %d", &v1, &v2, &v3) == 3) {
+				faceread = 1;
+			} else if(sscanf(line, "f %d//%d %d//%d %d//%d",
+				&v1, &n1, &v2, &n2, &v3, &n3) == 6) {
+				faceread = 1;
+			} else if(sscanf(line, "f %d/%d/%d %d/%d/%d %d/%d/%d",
+				&v1, &t1, &n1, &v2, &t2, &n2, &v3, &t3, &n3)
+				== 9) {
+			} else if(sscanf(line, "f %d/%d %d/%d %d/%d",
+				&v1, &t1, &v2, &t2, &v3, &t3) == 6) {
+				faceread = 1;
+			}
+			if(faceread) {
+				/* WARNING: start from 0 and not 1 */
+				face[f*3].v[0] = v1-1;
+				face[f*3].v[1] = v2-1;
+				face[f*3].v[2] = v3-1;
+
+				face[f*3].n[0] = n1-1;
+				face[f*3].n[1] = n2-1;
+				face[f*3].n[2] = n3-1;
+
+				face[f*3].t[0] = t1-1;
+				face[f*3].t[1] = t2-1;
+				face[f*3].t[2] = t3-1;
+				f++;
+			}
+		}
+	} while(++i < len); // && k < obj->nbvtx);
+	
+	height = fabs(maxy-miny);
+
+	obj->centery = height / 2.0;
+	obj->scalingz = height * 1.5; /* FIXME: arbitrary */ 
+
+fprintf(stderr, "read %d vtx, %d nrm, %d faces, centery=%f, scalingz=%f\n", v, vn, f, obj->centery, obj->scalingz);
+}
+
+
+static void objConvert(struct obj *obj, float *vtx, float *nrm, float *tex,
+	struct face *face)
+{
+	unsigned int nb;
+	unsigned int v1, v2, v3;
+	unsigned int id;
+	int i;
+
+	if(obj->nbnrm > obj->nbvtx) {
+		nb = obj->nbnrm;
+		obj->nbvtx = obj->nbnrm;
+	} else {
+		nb = obj->nbvtx;
+	}
+	obj->vtx = malloc(sizeof(float)*3*nb);
+	obj->nrm = malloc(sizeof(float)*3*nb);
+	obj->tex = malloc(sizeof(float)*3*nb); /* FIXME: check if tex > vtx */
+	obj->clr = malloc(sizeof(float)*4*nb);
+	obj->idx = malloc(sizeof(unsigned int)*3*obj->nbidx);
+
+for(i = 0; i < obj->nbvtx; i++) {
+	fprintf(stderr, "V=%f,%f,%f\n", vtx[i*3], vtx[i*3+1], vtx[i*3+2]);
+}
+
+	for(i = 0; i < obj->nbidx; i++) {
+
+fprintf(stderr, "FACE=%d,%d,%d %d,%d,%d %d,%d,%d\n", 
+	face[i*3].v[0],
+	face[i*3].v[1],
+	face[i*3].v[2],
+	face[i*3].n[0],
+	face[i*3].n[0],
+	face[i*3].n[0],
+	face[i*3].t[0],
+	face[i*3].t[0],
+	face[i*3].t[0]);
+		if(obj->nbnrm > obj->nbvtx) {
+			v1 = face[i*3].n[0];
+			v2 = face[i*3].n[1];
+			v3 = face[i*3].n[2];
+		} else {
+			v1 = face[i*3].v[0];
+			v2 = face[i*3].v[1];
+			v3 = face[i*3].v[2];
+		}
+
+		obj->idx[i*3] = v1;
+		obj->idx[i*3+1] = v2;
+		obj->idx[i*3+2] = v3;
+
+		setVtx(&obj->vtx[v1*3], vtx[face[i*3].v[0]*3], 
+			vtx[face[i*3].v[0]*3+1], vtx[face[i*3].v[0]*3+2]); 
+		setVtx(&obj->vtx[v2*3], vtx[face[i*3].v[1]*3], 
+			vtx[face[i*3].v[1]*3+1], vtx[face[i*3].v[1]*3+2]); 
+		setVtx(&obj->vtx[v3*3], vtx[face[i*3].v[2]*3], 
+			vtx[face[i*3].v[2]*3+1], vtx[face[i*3].v[2]*3+2]); 
+
+		id = face[i*3].n[0];
+fprintf(stderr, "NRMIDX: %d\n", id);
+		setVtx(&obj->nrm[v1*3], nrm[id*3], nrm[id*3+1], nrm[id*3+2]); 
+		id = face[i*3].n[1];
+fprintf(stderr, "NRMIDX: %d\n", id);
+		setVtx(&obj->nrm[v2*3], nrm[id*3], nrm[id*3+1], nrm[id*3+2]); 
+		id = face[i*3].n[2];
+fprintf(stderr, "NRMIDX: %d\n", id);
+		setVtx(&obj->nrm[v3*3], nrm[id*3], nrm[id*3+1], nrm[id*3+2]); 
+
+
+		/* FIXME: texture pos is 3D */
+/*
+		setVtx(&obj->tex[v1*3], tex[face[i*3].t[0]*3], 
+			tex[face[i*3].t[0]*3+1], tex[face[i*3].t[0]*3+2]); 
+		setVtx(&obj->tex[v2*3], tex[face[i*3].t[1]*3], 
+			tex[face[i*3].t[1]*3+1], tex[face[i*3].t[1]*3+2]); 
+		setVtx(&obj->tex[v3*3], tex[face[i*3].t[2]*3], 
+			tex[face[i*3].t[2]*3+1], tex[face[i*3].t[2]*3+2]); 
+*/
+		/* FIXME: default color to gray 50% */
+		setClr(&obj->clr[v1*4], 0.5, 0.5, 0.5, 1.0);
+		setClr(&obj->clr[v2*4], 0.5, 0.5, 0.5, 1.0);
+		setClr(&obj->clr[v3*4], 0.5, 0.5, 0.5, 1.0);
+	}
+
+for(i = 0; i < obj->nbidx; i++) {
+	fprintf(stderr, "IDX=%d,%d,%d\n", obj->idx[i*3], obj->idx[i*3+1],
+		obj->idx[i*3+2]);
+}
+}
+
+
+void objInit(struct obj *obj, const char *filename)
+{
+	float *vtx, *nrm, *tex;
+	struct face *face;
+
+fprintf(stderr, "< objRead");
+	objRead(obj, filename);
+fprintf(stderr, "> objRead");
+	objCount(obj);
+
+	vtx = malloc(sizeof(float)*obj->nbvtx*3);
+	nrm = malloc(sizeof(float)*obj->nbnrm*3);
+	tex = malloc(sizeof(float)*obj->nbtex*3);
+	face = malloc(sizeof(struct face)*obj->nbidx);
+fprintf(stderr, "nbvtx=%d, nbnrm=%d, nbidx=%d\n", obj->nbvtx, obj->nbnrm, obj->nbidx);
+	objParse(obj, vtx, nrm, tex, face);
+	free(obj->buf);	
+	objConvert(obj, vtx, nrm, tex, face);
+	free(vtx);
+	free(nrm);
+	free(tex);
+	free(face);
+
+int i;
+int id;
+float *v;
+for(i = 0; i < obj->nbidx; i++) {
+	id = obj->idx[i*3];
+//	v = obj->vtx;
+v = obj->nrm;
+	printf("%d) %f, %f, %f\n", id, v[id*3], v[id*3+1], v[id*3+2]);
+	id = obj->idx[i*3+1];
+	printf("%d) %f, %f, %f\n", id, v[id*3], v[id*3+1], v[id*3+2]);
+	id = obj->idx[i*3+2];
+	printf("%d) %f, %f, %f\n", id, v[id*3], v[id*3+1], v[id*3+2]);
+} 
+}
+
+
+void objDestroy(struct obj *obj)
+{
+	free(obj->vtx);
+	free(obj->nrm);
+	free(obj->tex);
+	free(obj->clr);
+	free(obj->idx);
+}

@@ -1,0 +1,8 @@
+name=Unknown Pleasure
+module=mod_unknown_pleasure.so
+glslversion=1.2
+vtxshader=basic.vsh
+frgshader=basic.fsh
+speed=0.001
+var=0.1 0.2 0.3
+clr0=1.0 0.5 0.1 1.0

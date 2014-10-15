@@ -1,0 +1,9 @@
+name=Kinetics
+module=mod_kinetics.so
+glslversion=1.2
+vtxshader=light.vsh
+frgshader=light.fsh
+speed=0.001
+var=0.2 2.0 0.0
+clr0=0.5 0.5 0.5 1.0
+objname=minifig.obj

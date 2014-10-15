@@ -1,0 +1,55 @@
+CC=gcc
+OS=$(shell uname)
+MODS=mod_tuto.so mod_7rain.so mod_flag.so mod_geography.so mod_kinetics.so mod_stratoscape.so mod_python.so mod_unknown_pleasure.so mod_parasite.so \
+mod_waste.so
+CFLAGS=-fPIC -Wall -DGL_EXT_PROTOTYPES -DX11 -g -I.. -I/usr/X11/include -I/usr/include/libpng12 -I/usr/include/python2.7
+ifeq ($(OS), Darwin)
+CFLAGS+=-I/usr/local/include/freetype2 
+SHARED=-bundle
+else
+CFLAGS+=-I/usr/include/freetype2
+SHARED=-shared
+endif
+#CFLAGS+=-DGEOMETRY_SHADER
+LDFLAGS=-fPIC -lGLU -lGL -lm -lX11 -L/usr/X11/lib -lfreetype -ljpeg -lpng -lpython2.7 -ldl
+all: $(MODS)
+
+OBJSDIR=../sandboxsrc/
+OBJS=$(OBJSDIR)mathematics.o $(OBJSDIR)transform.o $(OBJSDIR)opengl.o $(OBJSDIR)presets.o
+
+mod_tuto.so: mod_tuto.o pool.o skybox.o $(OBJSDIR)shader.o $(OBJS) 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(SHARED) $^ -o $@ 
+
+mod_7rain.so: mod_7rain.o pool.o $(OBJS) 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(SHARED) $^ -o $@ 
+
+mod_flag.so: mod_flag.o font.o texture.o $(OBJSDIR)shader.o $(OBJS)
+	$(CC) $(CFLAGS) $(LDFLAGS) $(SHARED) $^ -o $@ 
+
+mod_geography.so: mod_geography.o texture.o $(OBJS)
+	$(CC) $(CFLAGS) $(LDFLAGS) $(SHARED) $^ -o $@ 
+
+mod_kinetics.so: mod_kinetics.o obj.o $(OBJS)
+	$(CC) $(CFLAGS) $(LDFLAGS) $(SHARED) $^ -o $@ 
+
+mod_stratoscape.so: mod_stratoscape.o $(OBJS)
+	$(CC) $(CFLAGS) $(LDFLAGS) $(SHARED) $^ -o $@ 
+
+mod_parasite.so: mod_parasite.o $(OBJS)
+	$(CC) $(CFLAGS) $(LDFLAGS) $(SHARED) $^ -o $@ 
+
+mod_unknown_pleasure.so: mod_unknown_pleasure.o $(OBJS)
+	$(CC) $(CFLAGS) $(LDFLAGS) $(SHARED) $^ -o $@ 
+
+mod_python.so: mod_python.o $(OBJS)
+	$(CC) $(CFLAGS) $(LDFLAGS) $(SHARED) $^ -o $@ 
+
+mod_waste.so: mod_waste.o pool.o particles.o texture.o $(OBJS)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(SHARED) $^ -o $@
+
+installmods:
+	cp *.so ../resources/
+
+clean: 
+	rm *.o
+	rm *.so

@@ -21,7 +21,7 @@ void main(void)
 {
 	v_color = clr;
 	v_texpos = texpos;
-//	gl_PointSize = 32.0;
-	gl_PointSize = 1.0;
+	gl_PointSize = 16.0 * pos.z;
+//	gl_PointSize = 1.0;
 	gl_Position = mvp *pos;
 }

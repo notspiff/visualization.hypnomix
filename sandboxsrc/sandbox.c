@@ -8,7 +8,7 @@
 #include "ticktimer.h"
 #include "hypnomix.h"
 
-#define SHADERPATH "../resources/"
+#define SHADERPATH "../visualization.hypnomix/resources/"
 
 static struct ticktimer timer;
 static struct hypnomix hyp;

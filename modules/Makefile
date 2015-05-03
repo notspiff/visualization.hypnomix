@@ -14,7 +14,7 @@ ifeq ($(shell uname), Darwin)
 	ARCH=x86-osx
 else 
 	VISHOME=/home/amand/.xbmc/addons/visualization.unknownpleasure/
-	XBMCPATH=/home/amand/Code/xbmc-13.1-Gotham/
+	XBMCPATH=/home/amand/Code/kodi/
 	LDFLAGS+=-lGL -ljpeg -lpng -lfreetype -lpython2.7
 	CXXFLAGS+=-I/usr/include/python2.7
 	SHARED=-shared

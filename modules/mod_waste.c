@@ -61,7 +61,7 @@ void init(struct hypnomix *hyp)
 	ps.minz = -2.0;
 
 	for(i = 0; i < nbsources; i++) {
-		vec3Set(ps.emit[i].loc, 0.9, 0.0, -1.0);
+		vec3Set(ps.emit[i].loc, 0.0, 0.0, -1.0);
 		vec3Set(ps.emit[i].dir, -0.00001, 0.0, 0.0);
 		vec4Copy(hyp->pr.clr0, ps.emit[i].clr); 
 		ps.emit[i].life = 1000;
@@ -107,49 +107,65 @@ void draw(struct hypnomix *hyp)
 
 	glEnableVertexAttribArray(hyp->pg.clr);
 	glEnableVertexAttribArray(hyp->pg.pos);
-	glEnableVertexAttribArray(hyp->pg.texpos);
+//	glEnableVertexAttribArray(hyp->pg.texpos);
 
 	glUniformMatrix4fv(hyp->pg.mvp, 1, GL_FALSE, hyp->tr.mvp);
 
+int id = 20/3;
+int band = 0;
+
+// fprintf(stderr, "%f\n", hyp->var.average);
 	for(i = 0; i < nbsources; i++) {
-		ps.emit[i].loc[1] = cos(a) * 0.8;
-		ps.emit[i].mass = hyp->var.smooth[i];
-		ps.emit[i].clr[3] = hyp->var.smooth[i];
+		ps.emit[i].loc[0] = (hyp->var.average-0.1) * 4.0;
+		ps.emit[i].loc[1] = (hyp->var.average-0.1) * 2.0;
+		ps.emit[i].loc[2] = (hyp->var.average-0.1) * 2.0;
+
+// fprintf(stderr, "%f ", ps.emit[i].loc[1]);
+		ps.emit[i].mass = hyp->var.smooth[band];
+		ps.emit[i].clr[0] = hyp->var.smooth[band];
+		ps.emit[i].clr[1] = hyp->var.smooth[band+id];
+		ps.emit[i].clr[2] = hyp->var.smooth[2*id+band-1];
+		if(++band > id) {
+			band = 0;
+		} 
 	} 
 		
-a+=0.01;
+	for(i = 0; i < 2; i++) {
+		ps.forces[i].value = 40.0 * (i+1.0) * hyp->var.average;
+	}
 
 	particlesMove(&ps);
-/*
+
 #ifdef __APPLE__
 	glEnable(GL_PROGRAM_POINT_SIZE_EXT);
 #else
 	glEnable(GL_PROGRAM_POINT_SIZE);
 #endif
-*/
-//	glEnable(GL_POINT_SPRITE); 
+
+	glEnable(GL_POINT_SPRITE); 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glClearColor(clrbck[0], clrbck[1], clrbck[2], clrbck[3]);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	glBindTexture(GL_TEXTURE_2D, particletex[0]);
-	glActiveTexture(GL_TEXTURE0);
-	glUniform1i(hyp->pg.texture0, 0);
+//glBindTexture(GL_TEXTURE_2D, particletex[0]);
+//glActiveTexture(GL_TEXTURE0);
+//glUniform1i(hyp->pg.texture0, 0);
 
 	glVertexAttribPointer(hyp->pg.pos, 3, GL_FLOAT, GL_FALSE, stride, 
 		(GLvoid *)ps.particles.pool);
-	glVertexAttribPointer(hyp->pg.texpos, 2, GL_FLOAT, GL_FALSE, stride, 
-		(GLvoid *)ps.particles.pool+sizeof(vec3));
+//glVertexAttribPointer(hyp->pg.texpos, 2, GL_FLOAT, GL_FALSE, stride, 
+//(GLvoid *)ps.particles.pool+sizeof(vec3));
+
 	glVertexAttribPointer(hyp->pg.clr, 4, GL_FLOAT, GL_FALSE, stride, 
 		(GLvoid *)ps.particles.pool+sizeof(vec3)+sizeof(vec2));
 	glDrawArrays(GL_POINTS, 0, ps.particles.id);
 
 	glDisable(GL_BLEND);
-//	glDisable(GL_POINT_SPRITE);
+	glDisable(GL_POINT_SPRITE);
 
-	glDisableVertexAttribArray(hyp->pg.texpos);
+// glDisableVertexAttribArray(hyp->pg.texpos);
 	glDisableVertexAttribArray(hyp->pg.clr);
 	glDisableVertexAttribArray(hyp->pg.pos); 
 }

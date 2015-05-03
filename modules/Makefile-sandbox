@@ -48,7 +48,7 @@ mod_waste.so: mod_waste.o pool.o particles.o texture.o $(OBJS)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(SHARED) $^ -o $@
 
 installmods:
-	cp *.so ../resources/
+	cp *.so ../visualization.hypnomix/resources/
 
 clean: 
 	rm *.o

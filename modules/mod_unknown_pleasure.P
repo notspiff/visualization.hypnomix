@@ -1,88 +1,62 @@
-mod_unknown_pleasure.o: mod_unknown_pleasure.c \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/stdio.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/sys/cdefs.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/sys/_symbol_aliasing.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/sys/_posix_availability.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/Availability.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/AvailabilityInternal.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/_types.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/sys/_types.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/machine/_types.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/i386/_types.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/secure/_stdio.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/secure/_common.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/stdlib.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/sys/wait.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/sys/signal.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/sys/appleapiopts.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/machine/signal.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/i386/signal.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/i386/_structs.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/sys/_structs.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/machine/_structs.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/mach/i386/_structs.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/sys/resource.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/machine/endian.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/i386/endian.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/sys/_endian.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/libkern/_OSByteOrder.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/libkern/i386/_OSByteOrder.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/alloca.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/machine/types.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/i386/types.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/i386/_types.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/string.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/strings.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/secure/_string.h ../opengl.h \
-  /Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/OpenGL.framework/Headers/gl.h \
-  /Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/OpenGL.framework/Headers/glext.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/inttypes.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/stdint.h ../hypnomix.h \
-  /usr/llvm-gcc-4.2/bin/../lib/gcc/i686-apple-darwin11/4.2.1/include/stdarg.h \
-  ../mathematics.h /Developer/SDKs/MacOSX10.7.sdk/usr/include/math.h \
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/architecture/i386/math.h \
-  ../shader.h ../transform.h ../presets.h ../dir.h
-mod_unknown_pleasure.c :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/stdio.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/sys/cdefs.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/sys/_symbol_aliasing.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/sys/_posix_availability.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/Availability.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/AvailabilityInternal.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/_types.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/sys/_types.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/machine/_types.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/i386/_types.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/secure/_stdio.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/secure/_common.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/stdlib.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/sys/wait.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/sys/signal.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/sys/appleapiopts.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/machine/signal.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/i386/signal.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/i386/_structs.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/sys/_structs.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/machine/_structs.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/mach/i386/_structs.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/sys/resource.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/machine/endian.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/i386/endian.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/sys/_endian.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/libkern/_OSByteOrder.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/libkern/i386/_OSByteOrder.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/alloca.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/machine/types.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/i386/types.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/i386/_types.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/string.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/strings.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/secure/_string.h ../opengl.h :
-  /Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/OpenGL.framework/Headers/gl.h :
-  /Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/OpenGL.framework/Headers/glext.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/inttypes.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/stdint.h ../hypnomix.h :
-  /usr/llvm-gcc-4.2/bin/../lib/gcc/i686-apple-darwin11/4.2.1/include/stdarg.h :
-  ../mathematics.h /Developer/SDKs/MacOSX10.7.sdk/usr/include/math.h :
-  /Developer/SDKs/MacOSX10.7.sdk/usr/include/architecture/i386/math.h :
-  ../shader.h ../transform.h ../presets.h ../dir.h :
+mod_unknown_pleasure.o: mod_unknown_pleasure.c /usr/include/stdc-predef.h \
+ /usr/include/stdio.h /usr/include/features.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-64.h \
+ /usr/lib/gcc/x86_64-pc-linux-gnu/4.8.4/include/stddef.h \
+ /usr/include/bits/types.h /usr/include/bits/typesizes.h \
+ /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h \
+ /usr/lib/gcc/x86_64-pc-linux-gnu/4.8.4/include/stdarg.h \
+ /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
+ /usr/include/bits/stdio.h /usr/include/bits/stdio2.h \
+ /usr/include/stdlib.h /usr/include/bits/waitflags.h \
+ /usr/include/bits/waitstatus.h /usr/include/endian.h \
+ /usr/include/bits/endian.h /usr/include/bits/byteswap.h \
+ /usr/include/bits/byteswap-16.h /usr/include/sys/types.h \
+ /usr/include/time.h /usr/include/sys/select.h /usr/include/bits/select.h \
+ /usr/include/bits/sigset.h /usr/include/bits/time.h \
+ /usr/include/bits/select2.h /usr/include/sys/sysmacros.h \
+ /usr/include/bits/pthreadtypes.h /usr/include/alloca.h \
+ /usr/include/bits/stdlib-bsearch.h /usr/include/bits/stdlib-float.h \
+ /usr/include/bits/stdlib.h /usr/include/string.h /usr/include/xlocale.h \
+ /usr/include/bits/string.h /usr/include/bits/string2.h \
+ /usr/include/bits/string3.h ../opengl.h /usr/include/GL/gl.h \
+ /usr/include/GL/glext.h /usr/include/inttypes.h \
+ /usr/lib/gcc/x86_64-pc-linux-gnu/4.8.4/include/stdint.h \
+ /usr/include/stdint.h /usr/include/bits/wchar.h /usr/include/GL/glu.h \
+ ../hypnomix.h ../mathematics.h /usr/include/math.h \
+ /usr/include/bits/huge_val.h /usr/include/bits/huge_valf.h \
+ /usr/include/bits/huge_vall.h /usr/include/bits/inf.h \
+ /usr/include/bits/nan.h /usr/include/bits/mathdef.h \
+ /usr/include/bits/mathcalls.h /usr/include/bits/mathinline.h ../shader.h \
+ ../transform.h ../presets.h ../dir.h
+mod_unknown_pleasure.c /usr/include/stdc-predef.h :
+ /usr/include/stdio.h /usr/include/features.h /usr/include/sys/cdefs.h :
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h :
+ /usr/include/gnu/stubs-64.h :
+ /usr/lib/gcc/x86_64-pc-linux-gnu/4.8.4/include/stddef.h :
+ /usr/include/bits/types.h /usr/include/bits/typesizes.h :
+ /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h :
+ /usr/lib/gcc/x86_64-pc-linux-gnu/4.8.4/include/stdarg.h :
+ /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h :
+ /usr/include/bits/stdio.h /usr/include/bits/stdio2.h :
+ /usr/include/stdlib.h /usr/include/bits/waitflags.h :
+ /usr/include/bits/waitstatus.h /usr/include/endian.h :
+ /usr/include/bits/endian.h /usr/include/bits/byteswap.h :
+ /usr/include/bits/byteswap-16.h /usr/include/sys/types.h :
+ /usr/include/time.h /usr/include/sys/select.h /usr/include/bits/select.h :
+ /usr/include/bits/sigset.h /usr/include/bits/time.h :
+ /usr/include/bits/select2.h /usr/include/sys/sysmacros.h :
+ /usr/include/bits/pthreadtypes.h /usr/include/alloca.h :
+ /usr/include/bits/stdlib-bsearch.h /usr/include/bits/stdlib-float.h :
+ /usr/include/bits/stdlib.h /usr/include/string.h /usr/include/xlocale.h :
+ /usr/include/bits/string.h /usr/include/bits/string2.h :
+ /usr/include/bits/string3.h ../opengl.h /usr/include/GL/gl.h :
+ /usr/include/GL/glext.h /usr/include/inttypes.h :
+ /usr/lib/gcc/x86_64-pc-linux-gnu/4.8.4/include/stdint.h :
+ /usr/include/stdint.h /usr/include/bits/wchar.h /usr/include/GL/glu.h :
+ ../hypnomix.h ../mathematics.h /usr/include/math.h :
+ /usr/include/bits/huge_val.h /usr/include/bits/huge_valf.h :
+ /usr/include/bits/huge_vall.h /usr/include/bits/inf.h :
+ /usr/include/bits/nan.h /usr/include/bits/mathdef.h :
+ /usr/include/bits/mathcalls.h /usr/include/bits/mathinline.h ../shader.h :
+ ../transform.h ../presets.h ../dir.h :

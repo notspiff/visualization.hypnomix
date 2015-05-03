@@ -5,6 +5,6 @@ vtxshader=particle.vsh
 frgshader=particle.fsh
 speed=0.001
 var=0.1 0.2 0.3
-clr0=1.0 1.0 1.0 1.0
+clr0=1.0 1.0 1.0 0.5
 nbsources=20
 clrbck=0.0 0.0 0.0 1.0

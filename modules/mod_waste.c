@@ -96,10 +96,9 @@ void draw(struct hypnomix *hyp)
 {
 	int stride = sizeof(struct particle); 
 	int i;
-	static float a = 0.0;	
 
 	transformIdentity(&hyp->tr);
-	transformModelRotate(&hyp->tr, 0.0, a, 0.0);
+	// transformModelRotate(&hyp->tr, 0.0, a, 0.0);
 	transformViewTranslate(&hyp->tr, 0.0, 0.0, -4.0);
 	transformMVP(&hyp->tr);
 

@@ -2,7 +2,7 @@ CXXFLAGS=-fPIC -I..
 MODS=mod_tuto.so mod_7rain.so mod_flag.so mod_geography.so mod_kinetics.so \
 mod_stratoscape.so mod_python.so mod_unknown_pleasure.so mod_parasite.so \
 mod_waste.so
-
+OBJS=$(OBJSDIR)mathematics.o $(OBJSDIR)transform.o $(OBJSDIR)opengl.o $(OBJSDIR)presets.o
 
 ifeq ($(shell uname), Darwin)
 	VISHOME=/Users/amand/Library/Application\ Support/XBMC/addons/visualization.unknownpleasure/
@@ -21,13 +21,18 @@ else
 	ARCH=i486-linux
 endif
 
+ifeq ($(target), sandbox)
+CXXFLAGS=-fPIC -Wall -DGL_EXT_PROTOTYPES -DX11 -g -I.. -I/usr/X11/include -I/usr/include/libpng12 -I/usr/include/python2.7
+CXXFLAGS+=-I/usr/include/freetype2
+OBJSDIR=../sandboxsrc/
+VISHOME=../visualization.hypnomix/
+else
+OBJSDIR=../
+endif
+
 CFLAGS=$(CXXFLAGS)
 
 all: $(MODS)
-
-#OBJSDIR=../sandboxsrc/
-OBJSDIR=../
-OBJS=$(OBJSDIR)mathematics.o $(OBJSDIR)transform.o $(OBJSDIR)opengl.o $(OBJSDIR)presets.o
 
 mod_tuto.so: mod_tuto.o skybox.o pool.o $(OBJSDIR)shader.o $(OBJS) 
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(SHARED) $^ -o $@ 

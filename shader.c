@@ -78,7 +78,7 @@ int shaderInit(GLuint *program, const char *vtxsrc, const char *frgsrc,
 		return -1;
 	}
 
-	// compile vertex shader
+	/* vertex shader compilation */
 	vertex = glCreateShader(GL_VERTEX_SHADER);
 	shaderCompile((*program), vertex, vtxsrc);
 	fragment = glCreateShader(GL_FRAGMENT_SHADER);

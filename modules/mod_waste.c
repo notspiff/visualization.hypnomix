@@ -111,23 +111,17 @@ void draw(struct hypnomix *hyp)
 
 	glUniformMatrix4fv(hyp->pg.mvp, 1, GL_FALSE, hyp->tr.mvp);
 
-int id = 20/3;
-int band = 0;
-
 // fprintf(stderr, "%f\n", hyp->var.average);
-	for(i = 0; i < nbsources; i++) {
-		ps.emit[i].loc[0] = (hyp->var.average-0.1) * 4.0;
+	for(i = 0; i < hyp->var.nbbands; i++) {
+		ps.emit[i].loc[0] = (hyp->var.average-0.1) * 2.0;
 		ps.emit[i].loc[1] = (hyp->var.average-0.1) * 2.0;
 		ps.emit[i].loc[2] = (hyp->var.average-0.1) * 2.0;
 
 // fprintf(stderr, "%f ", ps.emit[i].loc[1]);
-		ps.emit[i].mass = hyp->var.smooth[band];
-		ps.emit[i].clr[0] = hyp->var.smooth[band];
-		ps.emit[i].clr[1] = hyp->var.smooth[band+id];
-		ps.emit[i].clr[2] = hyp->var.smooth[2*id+band-1];
-		if(++band > id) {
-			band = 0;
-		} 
+		ps.emit[i].mass = hyp->var.smooth[i];
+		ps.emit[i].clr[0] = hyp->var.smooth[i];
+		ps.emit[i].clr[1] = cos(hyp->var.smooth[i]);
+		ps.emit[i].clr[2] = hyp->var.smooth[i];
 	} 
 		
 	for(i = 0; i < 2; i++) {

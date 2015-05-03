@@ -62,13 +62,15 @@ void printLog(int type, const char *fmt, ...)
 
 extern "C" ADDON_STATUS ADDON_Create(void *hdl, void *props)
 {
-	if(!props)
+	if(!props) {
 		return ADDON_STATUS_UNKNOWN;
+	}
 
 	VIS_PROPS *visProps = (VIS_PROPS *)props;
 
-	if(hyprunning)
+	if(hyprunning) {
 		return ADDON_STATUS_OK;
+	}
 
 	hypnomixRegisterLogFunc(&hyp, printLog);
 
@@ -245,7 +247,8 @@ extern "C" ADDON_STATUS ADDON_GetStatus()
 }
 
 
-unsigned int ADDON_GetSettings(ADDON_StructSetting ***sSet)
+extern "C" unsigned int ADDON_GetSettings(ADDON_StructSetting ***sSet)
+// unsigned int ADDON_GetSettings(ADDON_StructSetting ***sSet)
 {
 	return 0;
 }

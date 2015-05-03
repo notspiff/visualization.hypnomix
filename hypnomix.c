@@ -69,6 +69,7 @@ void hypnomixLoadPreset(struct hypnomix *hyp, int id)
 	int i = 0;
 	struct list *prli = hyp->prlist.li;
 	char *filename;
+	float tmpf;
 
 	while(i != id && prli != NULL) {
 		i++;
@@ -112,7 +113,20 @@ hyp->pr.idfrgshader = 1; */
 		(*hyp->log)(HYP_INFO, "Module name: %s\n", hyp->mod->name);
 	}
 
-	for(i = 0; i < MAX_BAND; i++) { /* reset the bands values */
+	if(hyp->pr.name != NULL) { /* read if nbbands is defined in preset */
+		if(presetGetFloat(&hyp->pr, "nbbands", 1, &tmpf, 
+			NULL, NULL, NULL) == 1) {
+			if(tmpf < MAX_BAND) {
+				hyp->var.nbbands = tmpf;
+			} else {
+				hyp->var.nbbands = MAX_BAND;
+			}
+		}
+	}
+
+fprintf(stderr, "NBBANDS = %d\n", hyp->var.nbbands);
+
+	for(i = 0; i < hyp->var.nbbands; i++) { /* reset the bands values */
 		hyp->var.band[i] = 0.0;
 		hyp->var.prev[i] = 0.0;
 		hyp->var.smooth[i] = 0.0;

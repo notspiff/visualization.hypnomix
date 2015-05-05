@@ -8,7 +8,7 @@
 		point="xbmc.player.musicviz"
 		library_linux="visualization.hypnomix.so"
 		library_osx="visualization.hypnomix.dylib" />
-	<extension point="xbmc.add.metadata">
+	<extension point="xbmc.addon.metadata">
 		<summary lang="en">Hypnomix visualization</summary>
 		<description lang="en">...</description>
 		<disclaimer lang="fr">...</disclaimer>

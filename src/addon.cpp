@@ -161,12 +161,14 @@ extern "C" unsigned int GetSubModules(char ***names)
 }
 
 
+static int pindex = 0;
+
 extern "C" bool OnAction(long flags, const void *param)
 {
 	bool ret = false;
 
 	if(flags == VIS_ACTION_LOAD_PRESET && param) {
-		int pindex = *((int *)param);
+		pindex = *((int *)param);
 		hypnomixLoadPreset(&hyp, pindex);
 		ret = true;
 	}
@@ -204,7 +206,7 @@ extern "C" unsigned int GetPresets(char ***presets)
 extern "C" unsigned int GetPreset()
 {
 	/* return numpreset; */
-	return 0;
+	return pindex;
 }
 
 

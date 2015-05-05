@@ -1,11 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <addons/include/xbmc_vis_dll.h>
-#include <addons/include/xbmc_vis_types.h>
-#ifndef __APPLE__
-#include <utils/log.h>
-#endif
+#include <kodi/xbmc_vis_dll.h>
+#include <kodi/xbmc_vis_types.h>
 
 
 extern "C" 

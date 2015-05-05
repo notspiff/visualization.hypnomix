@@ -6,8 +6,8 @@
 	provider-name="amand.">
 	<extension
 		point="xbmc.player.musicviz"
-		library_linux="hypnomix.vis" 
-		library_osx="hypnomix.vis" />
+		library_linux="visualization.hypnomix.so"
+		library_osx="visualization.hypnomix.dylib" />
 	<extension point="xbmc.add.metadata">
 		<summary lang="en">Hypnomix visualization</summary>
 		<description lang="en">...</description>

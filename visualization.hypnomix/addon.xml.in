@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon 
 	id="visualization.hypnomix"
-	version="0.1.0"
+	version="0.2.0"
 	name="Hypnomix"
 	provider-name="amand.">
 	<extension
 		point="xbmc.player.musicviz"
-		library_linux="visualization.hypnomix.so"
-		library_osx="visualization.hypnomix.dylib" />
+		library_@PLATFORM@="@LIBRARY_FILENAME@"/>
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en">Hypnomix visualization</summary>
 		<description lang="en">...</description>
 		<disclaimer lang="fr">...</disclaimer>
-		<platform>linux osx</platform>
+		<platform>@PLATFORM@</platform>
 	</extension>
 </addon>

@@ -20,7 +20,7 @@ macro(build_module module sources)
 endmacro()
 
 
-find_package(kodi REQUIRED)
+find_package(Kodi REQUIRED)
 
 find_package(OpenGL REQUIRED)
 find_package(Freetype REQUIRED)

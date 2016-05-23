@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <kodi/xbmc_vis_dll.h>
-#include <kodi/xbmc_vis_types.h>
+#include <xbmc_vis_dll.h>
+#include <xbmc_vis_types.h>
 
 
 extern "C" 

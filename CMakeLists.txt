@@ -26,11 +26,13 @@ find_package(OpenGL REQUIRED)
 find_package(Freetype REQUIRED)
 find_package(JPEG REQUIRED)
 find_package(PNG REQUIRED)
+find_package(p8-platform REQUIRED)
 include_directories(${OpenGL_INCLUDE_DIR}
                     ${GLEW_INCLUDE_DIRS}
                     ${PNG_INCLUDE_DIRS}
                     ${JPEG_INCLUDE_DIR}
                     ${KODI_INCLUDE_DIR}
+		    ${p8-platform_INCLUDE_DIRS}
                     ${FREETYPE_INCLUDE_DIRS}
                     ${PROJECT_SOURCE_DIR}/src)
 
